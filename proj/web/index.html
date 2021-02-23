@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Mailer</title>
+        <link rel="stylesheet" href="static/css/main.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+        <link rel="icon" href="static/img/fav.png">
+        <script type="text/javascript" src="/eel.js"></script>
+    </head>
+    
+    <body>
+    
+        <div class="container mt-3">
+            <img src="static/img/logo.png" alt="" width="350">
+        </div>
+        <section>
+            <div class="container mt-5 p-3">
+                <form>
+            <div class="columns">
+                <div class="column">
+                    <h2 class="mt-2 mb-2">Откуда отправляем:</h2>
+                    <textarea class="textarea" placeholder="Откуда" id="send_from"></textarea>
+                </div>
+
+                <div class="column">
+                    <h2 class="mt-2 mb-2">Куда отправляем:</h2>
+                    <textarea class="textarea" placeholder="Кому" id="send_to" required></textarea>
+                </div>
+            </div>
+            
+
+            <div class="columns">
+                <div class="column">
+                     <h2 class="mt-2 mb-2">Тема сообщений:</h2>
+                    <input class="input" type="text" placeholder="Тема сообщений" id="subject" required>
+                </div>
+
+                <div class="column">
+                     <h2 class="mt-2 mb-2">Задержка для вложений:</h2>
+                    <input class="input" type="text" placeholder="Задержка для вложений" required id="attach_delay">
+                </div>
+
+                <div class="column">
+                    <h2 class="mt-2 mb-2">Общий пароль почт-отправителей:</h2>
+                    <input class="input" type="text" placeholder="Общий пароль почт-отправителей" required id="default_password">
+                </div>
+
+                <div class="column">
+                    <h2 class="mt-2 mb-2">Ключ RuCaptcha:</h2>
+                    <input class="input" type="text" placeholder="Ключ RuCaptcha" required id="api_key">
+                </div>
+
+                
+            </div>
+            <h2 class="mt-2 mb-2">Основной текст сообщения:</h2>
+            <textarea class="textarea" placeholder="Текст сообщения" id="message_text"></textarea>
+
+
+           <div class="columns mt-3 box has-text-centered">
+                <div class="column">
+                    <input class="input" type="text" placeholder="Имя файла 1" id="file_name_1">
+                </div>
+
+                <div class="column">
+                    <input class="input" type="text" placeholder="Имя файла 2" id="file_name_2">
+                </div>
+
+                <div class="column">
+                    <input class="input" type="text" placeholder="Имя файла 3" id="file_name_3">
+                </div>
+
+                </form>
+            </div>
+
+            
+
+            <div class="box has-text-centered">
+                <button class="button is-success" id="start_send">НАЧАТЬ</button>
+            </div>
+            
+
+<script>
+    
+    let st = document.querySelector("#start_send");
+    st.addEventListener("click", send_data);
+    async function send_data(){
+
+        // отправители
+        var sender_textarea = document.getElementById("send_from");
+        var sender_list = sender_textarea.value.split("\n");
+        console.log(sender_list)
+        // получатели
+        var receiver_text_area = document.getElementById("send_to");
+        var receiver_list = receiver_text_area.value.split("\n");
+        console.log(receiver_list)
+        // Тема сообщений
+        let subject = document.querySelector("#subject").value;
+        console.log(subject)
+        // Задержка для вложений
+        let attach_delay = document.querySelector("#attach_delay").value;
+        console.log(attach_delay)
+        // Общий пароль для почт
+        let default_password = document.querySelector("#default_password").value;
+        console.log(default_password)
+        // api_key
+        let captcha_key = document.querySelector("#api_key").value;
+        console.log(captcha_key)
+         // Текст сообщения
+        let message_text = document.querySelector("#message_text").value;
+        console.log(message_text)
+
+        // Вложения
+        let attach_file = [];
+        
+        let file_1 = document.querySelector("#file_name_1").value;
+        let file_2 = document.querySelector("#file_name_2").value;
+        let file_3 = document.querySelector("#file_name_3").value;
+
+        attach_file.push(file_1,file_2, file_3);
+        console.log(attach_file);
+        
+        await eel.main(sender_list, receiver_list, subject, attach_delay, default_password, captcha_key, message_text, attach_file);
+    }
+
+</script>
+            </div>
+        <section>
+    </body>
+</html>
