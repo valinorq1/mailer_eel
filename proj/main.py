@@ -65,7 +65,7 @@ def my_send_mail(receiver, attach, subject, email_text, attach_send_delay, captc
             captcha_solve_data = captcha_three(driver.page_source, captcha_api_key)
             time.sleep(5)
             # обрабатываем капчу
-            captcha_input = driver.find_element_by_xpath("//inp ut[contains(@name,'captcha_entered')]")
+            captcha_input = driver.find_element_by_xpath("//input[contains(@name,'captcha_entered')]")
             captcha_input.send_keys(captcha_solve_data)
             driver.find_element_by_xpath("(//input[contains(@name,'doit')])[1]").click()
 
