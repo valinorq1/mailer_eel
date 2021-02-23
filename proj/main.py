@@ -40,7 +40,7 @@ def my_send_mail(receiver, attach, subject, email_text, attach_send_delay, captc
     #  Вложения
     if len(attach) >= 1:
         for f in attach:
-            driver.find_element_by_xpath("(//input[contains(@class,'file')])[1]").send_keys(f'/Users/aleksandrmoskalenko/Downloads/mailer/{f}')
+            driver.find_element_by_xpath("(//input[contains(@class,'file')])[1]").send_keys(f'/Users/aleksandrmoskalenko/Desktop/mailerv2/mailer_eel/{f}')
             #  .send_keys(f'/Users/aleksandrmoskalenko/Downloads/mailer/{f}')
             time.sleep(attach_send_delay)
 
