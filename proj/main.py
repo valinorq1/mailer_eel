@@ -17,7 +17,8 @@ eel.init('web')
 chrome_options = Options()
 chrome_options.add_argument('--log-level=3')
 chrome_options.add_argument("--start-maximized")
-driver = webdriver.Chrome(options=chrome_options, executable_path=os.getcwd() + './chromedriver')
+#driver = webdriver.Chrome(options=chrome_options, executable_path=os.getcwd() + './chromedriver')
+driver = webdriver.Chrome(options=chrome_options, executable_path='/Users/aleksandrmoskalenko/Downloads/mailer/chromedriver')
 
 
 def my_send_mail(receiver, attach, subject, email_text, attach_send_delay, captcha_api_key):
@@ -39,7 +40,7 @@ def my_send_mail(receiver, attach, subject, email_text, attach_send_delay, captc
     #  Вложения
     if len(attach) >= 1:
         for f in attach:
-            driver.find_element_by_xpath("(//input[contains(@class,'file')])[1]").send_keys(f)
+            driver.find_element_by_xpath("(//input[contains(@class,'file')])[1]").send_keys(f'/Users/aleksandrmoskalenko/Downloads/mailer/{f}')
             #  .send_keys(f'/Users/aleksandrmoskalenko/Downloads/mailer/{f}')
             time.sleep(attach_send_delay)
 
@@ -57,8 +58,6 @@ def my_send_mail(receiver, attach, subject, email_text, attach_send_delay, captc
 
         except NoSuchElementException:
             pass
-            #  отправить
-            #  self.driver.find_element_by_xpath("//button[@data-lego='react'][contains(.,'Отправить')]").click()
     if 'b-captcha' in driver.page_source:
         print('Поймали капчу')
         time.sleep(3)
@@ -68,7 +67,6 @@ def my_send_mail(receiver, attach, subject, email_text, attach_send_delay, captc
             # обрабатываем капчу
             captcha_input = driver.find_element_by_xpath("//inp ut[contains(@name,'captcha_entered')]")
             captcha_input.send_keys(captcha_solve_data)
-            # self.driver.find_element_by_xpath("(//input[@type='submit'])[3]").click()
             driver.find_element_by_xpath("(//input[contains(@name,'doit')])[1]").click()
 
             time.sleep(3)
